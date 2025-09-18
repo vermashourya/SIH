@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Leaderboard - Eco Education Platform</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="home.css" />
+  <style>
+    body { background: #eafcee; }
+    #leaderboard-container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px 45px;
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(39, 148, 39, 0.15);
+    }
+    #leaderboard-container h2 { 
+      margin-top: 0; 
+      text-align: center; 
+      color: #279427; 
+      font-size: 2rem; 
+      font-weight: 900;
+    }
+    ol.leaderboard-list {
+      font-size: 1.25rem;
+      margin-top: 18px;
+      padding-left: 25px;
+      color: #244314;
+    }
+    ol.leaderboard-list li {
+      padding: 9px 0;
+      border-bottom: 1px solid #a8d6a8;
+      font-weight: 700;
+    }
+    #your-rank {
+      margin-top: 22px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #188c34;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Leaderboard</h1>
+  </header>
+  <main>
+    <div id="leaderboard-container">
+      <h2>Top 15 Scores</h2>
+      <ol class="leaderboard-list" id="leaderboard-list"></ol>
+      <div id="your-rank"></div>
+    </div>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="leaderboard.js"></script>
+</body>
+</html>

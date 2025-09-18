@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eco Education Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+  <header>
+    <h2 class="logo">Eco Education Platform</h2>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li id="authLink"><a href="login.html">Login</a></li>
+        <a href="leaderboard.html" class="btn btn-primary">Leaderboard</a>
+
+      </ul>
+    </nav>
+  </header>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Learn, Act & Save the Planet 🌍</h1>
+      <p>Interactive eco-learning to build sustainable habits</p>
+      <button class="cta-btn">Get Started</button>
+    </div>
+  </section>
+  <!-- Welcome Message (only if logged in) -->
+  <section class="welcome" id="welcomeSection" style="display:none;">
+    <h2 id="welcomeMsg"></h2>
+  </section>
+  <!-- Features Section (cards are now clickable) -->
+  <section class="features">
+    <a href="activities.html" class="card-link">
+      <div class="card">
+        <h3>🌱 Activities</h3>
+        <p>Engaging eco-friendly lessons with real impact</p>
+      </div>
+    </a>
+    <a href="quizzes.html" class="card-link">
+      <div class="card">
+        <h3>📊 Quizzes</h3>
+        <p>Challenge yourself & test your environmental knowledge</p>
+      </div>
+    </a>
+    <a href="tips.html" class="card-link">
+      <div class="card">
+        <h3>💡 Tips</h3>
+        <p>Practical advice to live a greener lifestyle daily</p>
+      </div>
+    </a>
+  </section>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOJU2e_yhYpza7n2HBtocACuxMAiLgzQ0",
+      authDomain: "sih-eco-8f351.firebaseapp.com",
+      databaseURL: "https://sih-eco-8f351-default-rtdb.firebaseio.com",
+      projectId: "sih-eco-8f351",
+      storageBucket: "sih-eco-8f351.firebasestorage.app",
+      messagingSenderId: "1066298502957",
+      appId: "1:1066298502957:web:153102e7032e13711beda4"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+    const authLink = document.getElementById("authLink");
+    // Check login state
+    auth.onAuthStateChanged(async (user) => {
+      const welcomeSection = document.getElementById("welcomeSection");
+      const welcomeMsg = document.getElementById("welcomeMsg");
+      if (user) {
+        // Change nav to Logout
+        authLink.innerHTML = `<button id="logoutBtn" class="logout-btn">Logout</button>`;
+        // Load user name
+        const snapshot = await db.ref("users/" + user.uid).get();
+        if (snapshot.exists()) {
+          welcomeMsg.innerText = "Welcome, " + snapshot.val().fullName + " 👋";
+          welcomeSection.style.display = "block";
+        }
+        // Logout handler
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+          await auth.signOut();
+          location.reload();
+        });
+      } else {
+        // Not logged in → Show Login
+        authLink.innerHTML = `<a href="login.html">Login</a>`;
+        welcomeSection.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
